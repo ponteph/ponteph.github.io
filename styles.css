@@ -99,17 +99,19 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
   position:relative;
+  z-index:0;
 }
 
-/* La textura de papel vive acá, separada del body real */
+/* Textura de fondo de toda la página */
 body::before{
   content:"";
-  position:fixed;
+  position:fixed;      /* tamaño = pantalla visible, no toda la página → no se agranda */
   inset:0;
   z-index:-1;
   background-image:url('img/image.png');
   background-size:cover;
   background-position:center;
+  background-repeat:no-repeat;
   background-blend-mode:multiply;
   background-color:var(--bg);
   pointer-events:none;
@@ -168,21 +170,13 @@ img{ max-width:100%; display:block; }       /* Las imágenes nunca se desbordan 
    5. NAVEGACIÓN (menú fijo arriba de todo)
    ----------------------------------------------------------------------- */
 header.site-nav{
-  position:fixed;      /* Se queda pegado arriba aunque el usuario haga scroll */
-  top:0; left:0; right:0;
-  z-index:100;          /* Se dibuja por ENCIMA del resto del contenido */
-  background:rgba(236,231,217,0.86); /* Beige semi-transparente */
-  backdrop-filter:blur(6px);          /* Desenfoca lo que pasa por detrás del menú (efecto vidrio esmerilado) */
-  -webkit-backdrop-filter:blur(6px);  /* Misma propiedad, versión para Safari */
-  border-bottom:1px solid transparent;
-  transition:border-color .4s ease, background .4s ease; /* Transición suave al aparecer la línea */
   background-color:var(--bg);
   background-image:url('img/image.png');
-  background-size:cover; /* la imagen cubre toda la pantalla sin repetirse */
+  background-size:cover;
   background-position:center;
-  background-attachment:fixed; /* la textura queda quieta aunque hagas scroll, como si fuera el papel de fondo de todo el sitio, no de cada sección */
-  background-blend-mode:multiply; /* mezcla la textura con el beige: donde la foto tiene sombras/grano, oscurece un poco el beige; donde es blanca, casi no cambia nada */
-
+  background-blend-mode:multiply;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
 }
 
 /* Esta clase se agrega/saca con JavaScript (ver script.js) cuando el
@@ -465,27 +459,6 @@ header.site-nav.scrolled{
   }
 }
 
-@media (max-width:640px){
-
-  /* El fondo pasa de "fixed" a "absolute": así no depende del alto
-     dinámico del navegador mobile (que cambia cuando aparece/
-     desaparece la barra de direcciones), que era lo que generaba
-     el salto raro. */
-  body::before{
-    position:absolute;
-    height:100%;
-  }
-
-  /* El header ya NO tiene textura propia: queda transparente y
-     deja ver la textura del body por debajo, que es una sola,
-     continua — sin costura porque no hay dos imágenes distintas
-     encontrándose. */
-  header.site-nav{
-    background:none;
-    backdrop-filter:none;
-    -webkit-backdrop-filter:none;
-  }
-}
 
 /* --- El "marco" placeholder de cada foto ---
    Esto es lo que se ve MIENTRAS no hay una foto real cargada.
