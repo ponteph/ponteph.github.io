@@ -467,8 +467,12 @@ header.site-nav.scrolled{
 
 @media (max-width:640px){
   header.site-nav{
-    background:var(--bg);        /* beige sólido, sin transparencia */
-    backdrop-filter:none;        /* sin desenfoque */
+    background-color:var(--bg);
+    background-image:url('img/image.png');
+    background-repeat:repeat;
+    background-size:450px;              /* mismo valor que le pusiste al body, para que combine */
+    background-blend-mode:multiply;
+    backdrop-filter:none;               /* esto es lo que sacamos: el blur pesado */
     -webkit-backdrop-filter:none;
   }
 }
