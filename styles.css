@@ -422,6 +422,7 @@ header.site-nav.scrolled{
   body{
     background-attachment: scroll;
   }
+  
   /* Todas las categorías pasan a 2 columnas en celular.
      grid-auto-flow:dense evita que queden huecos vacíos cuando
      una foto panorámica no entra justo donde "le tocaría". */
@@ -461,6 +462,14 @@ header.site-nav.scrolled{
   }
   .grid-retratos .ph{
     grid-column:span 1;
+  }
+}
+
+@media (max-width:640px){
+  header.site-nav{
+    background:var(--bg);        /* beige sólido, sin transparencia */
+    backdrop-filter:none;        /* sin desenfoque */
+    -webkit-backdrop-filter:none;
   }
 }
 
