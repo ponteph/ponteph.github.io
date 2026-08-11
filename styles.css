@@ -682,3 +682,15 @@ footer a{
   text-underline-offset:3px; /* separa un poco el subrayado de la letra, se ve más prolijo */
 }
 footer a:hover{ color:var(--accent); }
+
+header.site-nav {
+  background: #ECE7D9 !important;
+  background-color: #ECE7D9 !important;
+  background-image: none !important;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+header.site-nav::before {
+  display: none !important;
+}
