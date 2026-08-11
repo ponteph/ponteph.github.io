@@ -465,6 +465,32 @@ header.site-nav.scrolled{
   }
 }
 
+@media (max-width:640px){
+
+  /* Body: en vez de "fixed" + cover (que en celu genera ese efecto
+     de imagen recortada/multiplicada), pasa a "absolute" + mosaico
+     en tamaño fijo. Al no depender de la altura total de la página
+     ni de un cálculo de "cover" sobre un elemento gigante, no le
+     genera el glitch al navegador. */
+  body::before{
+    position:absolute;
+    background-size:600px;
+    background-repeat:repeat;
+  }
+
+  /* Header: le damos SU PROPIA textura (misma imagen), sin blur ni
+     transparencia — eso es lo que le generaba el movimiento y la
+     mala calidad mientras scrolleabas. */
+  header.site-nav{
+    background-color:var(--bg);
+    background-image:url('img/image.png');
+    background-size:600px;
+    background-repeat:repeat;
+    background-blend-mode:multiply;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+}
 
 /* --- El "marco" placeholder de cada foto ---
    Esto es lo que se ve MIENTRAS no hay una foto real cargada.
