@@ -93,16 +93,26 @@ html{
 }
 
 body{
-background-color:var(--bg);
-background-image:url('img/image.png');
-background-size:cover; /* la imagen cubre toda la pantalla sin repetirse */
-background-position:center;
-background-attachment:fixed; /* la textura queda quieta aunque hagas scroll, como si fuera el papel de fondo de todo el sitio, no de cada sección */
-background-blend-mode:multiply; /* mezcla la textura con el beige: donde la foto tiene sombras/grano, oscurece un poco el beige; donde es blanca, casi no cambia nada */
-color:var(--ink);
-font-family:var(--font);
--webkit-font-smoothing:antialiased;
-overflow-x:hidden;
+  background-color:var(--bg);
+  color:var(--ink);
+  font-family:var(--font);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* La textura de papel vive acá, separada del body real */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background-image:url('img/image.png');
+  background-size:cover;
+  background-position:center;
+  background-blend-mode:multiply;
+  background-color:var(--bg);
+  pointer-events:none;
 }
 
 /* Respeta a las personas que configuraron su sistema para reducir
