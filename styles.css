@@ -178,7 +178,7 @@ header.site-nav{
   transition:border-color .4s ease, background .4s ease; /* Transición suave al aparecer la línea */
   background-color:var(--bg);
   background-image:url('img/image.png');
-  background-size:cover; /* la imagen cubre toda la pantalla sin repetirse */
+  background-size: 100% auto;  
   background-position:center;
   background-attachment:fixed; /* la textura queda quieta aunque hagas scroll, como si fuera el papel de fondo de todo el sitio, no de cada sección */
   background-blend-mode:multiply; /* mezcla la textura con el beige: donde la foto tiene sombras/grano, oscurece un poco el beige; donde es blanca, casi no cambia nada */
