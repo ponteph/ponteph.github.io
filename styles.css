@@ -1,0 +1,672 @@
+/* =============================================================================
+   PORTFOLIO — BIANCA PONTECCHIANI — HOJA DE ESTILOS (CSS)
+   =============================================================================
+     1. Fuente (Neue Montreal)
+     2. Variables globales (colores, fuente, medidas)
+     3. Reset básico
+     4. Utilidades generales
+     5. Navegación (menú fijo arriba)
+     6. Hero (pantalla de inicio)
+     7. Títulos de sección
+     8. Galería / grillas de fotos
+     9. Sobre mí
+     10. Contacto
+     11. Pie de página
+   ============================================================================= */
+
+
+/* -----------------------------------------------------------------------
+   1. FUENTE — NEUE MONTREAL
+   -----------------------------------------------------------------------
+*/
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('fonts/NeueMontreal-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('fonts/NeueMontreal-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('fonts/NeueMontreal-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* -----------------------------------------------------------------------
+   2. VARIABLES GLOBALES (":root")
+   -----------------------------------------------------------------------
+   ----------------------------------------------------------------------- */
+:root{
+  /* --- Paleta de colores --- */
+  --bg:        #ECE7D9;  /* Beige de fondo principal (toda la página) */
+  --bg-panel:  #E1DAC6;  /* Beige un poco más oscuro, para los recuadros de fotos (placeholders) */
+  --ink:       #17150F;  /* Negro cálido, para el texto principal (títulos, nombre) */
+  --ink-soft:  #4C4838;  /* Gris-marrón, para texto secundario (párrafos, subtítulos) */
+  --ink-faint: #8A8471;  /* Gris más claro, para texto terciario (detalles, números) */
+  --accent:    #5B6146;  /* Verde musgo — el único color "extra", ligado a la naturaleza.
+                             Se usa poco y a propósito: líneas al hacer hover, subrayados.
+                             Ese uso mínimo es lo que lo hace sentir elegante y no cargado. */
+
+  /* --- Líneas divisorias --- */
+  --line:      rgba(23,21,15,0.16);  /* Línea fina normal (separa secciones) */
+  --line-soft: rgba(23,21,15,0.09);  /* Línea fina más sutil (separaciones internas) */
+
+  /* --- Tipografía ---
+     Se prueban en este orden: primero Neue Montreal (si ya agregaste los
+     archivos de la fuente), si no está disponible usa Helvetica Neue,
+     si tampoco existe usa Inter, y como último recurso cualquier fuente
+     "sans-serif" (de palo, sin serifas) que tenga el sistema operativo. */
+  --font: 'Neue Montreal', 'Helvetica Neue', 'Inter', Arial, sans-serif;
+
+  /* --- Medidas del layout --- */
+  --max: 1400px;                       /* Ancho máximo del contenido en pantallas grandes */
+  --gutter: clamp(20px, 4vw, 56px);    /* Margen lateral: mínimo 20px, ideal 4% del ancho de pantalla, máximo 56px.
+                                           clamp() hace que el espaciado se adapte solo entre celular y monitor grande. */
+}
+
+
+/* -----------------------------------------------------------------------
+   3. RESET BÁSICO
+   -----------------------------------------------------------------------
+   Los navegadores traen estilos por defecto distintos entre sí (márgenes
+   en <body>, viñetas en listas, etc). Este bloque los "resetea" para
+   empezar todos del mismo punto de partida y evitar sorpresas.
+   ----------------------------------------------------------------------- */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box; /* Hace que el padding y el borde de un elemento se cuenten
+                             DENTRO de su ancho total, en vez de sumarse aparte.
+                             Esto evita que los cálculos de la grilla se rompan. */
+}
+
+html{
+  scroll-behavior:smooth; /* Al clickear un link del menú (ej: "Contacto"),
+                              el scroll se desliza suavemente en vez de saltar de golpe. */
+}
+
+body{
+background-color:var(--bg);
+background-image:url('img/image.png');
+background-size:cover; /* la imagen cubre toda la pantalla sin repetirse */
+background-position:center;
+background-attachment:fixed; /* la textura queda quieta aunque hagas scroll, como si fuera el papel de fondo de todo el sitio, no de cada sección */
+background-blend-mode:multiply; /* mezcla la textura con el beige: donde la foto tiene sombras/grano, oscurece un poco el beige; donde es blanca, casi no cambia nada */
+color:var(--ink);
+font-family:var(--font);
+-webkit-font-smoothing:antialiased;
+overflow-x:hidden;
+}
+
+/* Respeta a las personas que configuraron su sistema para reducir
+   animaciones (por mareos, epilepsia fotosensible, etc). Si esa opción
+   está activada, todas las animaciones del sitio se acortan a casi cero. */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+}
+
+a{ color:inherit; text-decoration:none; }  /* Los links no se ven azules ni subrayados por defecto */
+ul{ list-style:none; }                      /* Quita las viñetas de las listas */
+img{ max-width:100%; display:block; }       /* Las imágenes nunca se desbordan de su contenedor */
+
+::selection{ background:var(--accent); color:var(--bg); } /* Color del texto cuando el usuario lo selecciona con el mouse */
+
+/* Contorno visible cuando se navega con el teclado (tecla Tab).
+   Importante para accesibilidad: alguien que no usa mouse necesita
+   ver claramente en qué elemento está parado. */
+:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+
+/* -----------------------------------------------------------------------
+   4. UTILIDADES GENERALES
+   -----------------------------------------------------------------------
+   Clases chiquitas que se reutilizan en varias secciones distintas. */
+
+/* .wrap: centra el contenido y le pone un margen lateral (--gutter).
+   Se usa en casi todas las secciones para que el contenido nunca
+   toque el borde de la pantalla ni se estire infinito en monitores anchos. */
+.wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding-left:var(--gutter);
+  padding-right:var(--gutter);
+}
+
+/* .eyebrow: texto chiquito en mayúsculas con letras separadas,
+   usado como "etiqueta" arriba de un título (ej: "Portfolio fotográfico") */
+.eyebrow{
+  font-size:12px;
+  letter-spacing:0.18em;      /* separación entre letras */
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--ink-soft);
+}
+
+
+/* -----------------------------------------------------------------------
+   5. NAVEGACIÓN (menú fijo arriba de todo)
+   ----------------------------------------------------------------------- */
+header.site-nav{
+  position:fixed;      /* Se queda pegado arriba aunque el usuario haga scroll */
+  top:0; left:0; right:0;
+  z-index:100;          /* Se dibuja por ENCIMA del resto del contenido */
+  background:rgba(236,231,217,0.86); /* Beige semi-transparente */
+  backdrop-filter:blur(6px);          /* Desenfoca lo que pasa por detrás del menú (efecto vidrio esmerilado) */
+  -webkit-backdrop-filter:blur(6px);  /* Misma propiedad, versión para Safari */
+  border-bottom:1px solid transparent;
+  transition:border-color .4s ease, background .4s ease; /* Transición suave al aparecer la línea */
+  background-color:var(--bg);
+  background-image:url('img/image.png');
+  background-size:cover; /* la imagen cubre toda la pantalla sin repetirse */
+  background-position:center;
+  background-attachment:fixed; /* la textura queda quieta aunque hagas scroll, como si fuera el papel de fondo de todo el sitio, no de cada sección */
+  background-blend-mode:multiply; /* mezcla la textura con el beige: donde la foto tiene sombras/grano, oscurece un poco el beige; donde es blanca, casi no cambia nada */
+
+}
+
+/* Esta clase se agrega/saca con JavaScript (ver script.js) cuando el
+   usuario hace scroll: dibuja una línea fina debajo del menú para
+   separarlo visualmente del contenido una vez que empezás a bajar. */
+header.site-nav.scrolled{
+  border-bottom-color:var(--line);
+}
+
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between; /* Logo a la izquierda, links a la derecha */
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+.nav-mark{
+  font-weight:500;
+  font-size:15px;
+  letter-spacing:0.02em;
+}
+
+.nav-links{
+  display:flex;
+  gap:clamp(18px,3vw,40px); /* separación entre los 3 links, adaptable al ancho de pantalla */
+}
+
+.nav-links a{
+  font-size:13px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-weight:500;
+  position:relative;
+  padding-bottom:4px;
+}
+
+/* Línea que aparece debajo del link al pasar el mouse (subrayado animado) */
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0; bottom:0;
+  width:0%;                 /* Arranca en 0% de ancho (invisible) */
+  height:1px;
+  background:var(--accent);
+  transition:width .3s ease;
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after{ width:100%; } /* Al pasar el mouse (o llegar con Tab), crece a 100% */
+
+
+/* -----------------------------------------------------------------------
+   6. HERO (primera pantalla)
+   ----------------------------------------------------------------------- */
+.hero{
+  min-height:100svh;   /* Ocupa el 100% del alto visible de la pantalla
+                           ("svh" = small viewport height, una unidad pensada
+                           para que funcione bien también en celulares,
+                           donde la barra del navegador cambia de tamaño). */
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end; /* El contenido se apoya abajo del todo del hero */
+  padding-top:140px;         /* Deja lugar arriba para que el menú fijo no lo tape */
+  padding-bottom:clamp(40px,6vw,72px);
+  position:relative;         /* Necesario para poder ubicar el "scroll-cue" con position:absolute adentro */
+}
+
+.hero-eyebrow-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:18px;
+  flex-wrap:wrap;   /* si no entra en una línea (celular chico), pasa a la línea de abajo */
+  gap:10px;
+}
+
+/* El nombre "Bianca Pontecchiani" — el elemento más grande de toda la página */
+.hero h1{
+  font-weight:600;
+  line-height:0.92;          /* Líneas pegadas entre sí (típico de tipografía grande y editorial) */
+  letter-spacing:-0.03em;    /* Letras un poco más juntas, para que se vea compacto y no "flojo" */
+  font-size:clamp(52px, 10.5vw, 168px); /* Tamaño mínimo 52px, ideal 10.5% del ancho de pantalla, máximo 168px */
+  text-transform:uppercase;
+}
+
+.hero-sub{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-top:28px;
+  gap:24px;
+  flex-wrap:wrap;
+  border-top:1px solid var(--line); /* línea fina que separa el nombre de la frase de abajo */
+  padding-top:20px;
+}
+
+.hero-sub p{
+  font-size:clamp(15px,1.6vw,19px);
+  max-width:34ch;         /* "ch" = ancho aproximado del caracter "0". 34ch evita que el párrafo
+                              se estire demasiado y sea incómodo de leer en pantallas anchas. */
+  color:var(--ink-soft);
+  font-weight:400;
+}
+
+/* Las "pastillas" con los temas (Naturaleza, Retratos, etc) */
+.hero-tags{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  font-size:12px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.hero-tags span{
+  border:1px solid var(--line);
+  padding:6px 12px;
+  border-radius:999px; /* número muy alto = bordes completamente redondeados (forma de píldora) */
+}
+
+/* Indicador "Desplazate" con una línea, del costado derecho del hero */
+.scroll-cue{
+  position:absolute;
+  right:var(--gutter);
+  top:50%;
+  transform:translateY(-50%) rotate(90deg); /* lo centra verticalmente y lo gira 90° (texto vertical) */
+  transform-origin:right center;
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.scroll-cue::after{
+  content:"";
+  width:36px; height:1px;
+  background:var(--ink-faint);
+}
+/* En pantallas chicas (celular) lo ocultamos: no hay espacio y no aporta */
+@media (max-width:820px){ .scroll-cue{ display:none; } }
+
+
+/* -----------------------------------------------------------------------
+   7. TÍTULOS DE SECCIÓN
+   -----------------------------------------------------------------------
+*/
+.section-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between; /* título a la izquierda, detalle a la derecha */
+  gap:20px;
+  padding-top:clamp(60px,8vw,110px);
+  padding-bottom:clamp(24px,4vw,40px);
+  border-top:1px solid var(--line); /* línea que marca el inicio de cada categoría nueva */
+  flex-wrap:wrap;
+}
+.section-head h2{
+  font-size:clamp(30px,4vw,52px);
+  font-weight:600;
+  letter-spacing:-0.02em;
+  text-transform:uppercase;
+}
+.section-head .count{
+  font-size:13px;
+  color:var(--ink-faint);
+  letter-spacing:0.05em;
+}
+
+
+/* -----------------------------------------------------------------------
+   8. GALERÍA — GRILLAS DE FOTOS
+   ----------------------------------------------------------------------- */
+.category{
+  padding-bottom:clamp(20px,4vw,10px);
+}
+
+.grid{
+  display:grid;
+  gap:clamp(10px,1.6vw,18px); /* separación entre fotos */
+  padding-bottom:clamp(50px,7vw,90px);
+}
+
+
+/* --- Naturaleza: mezcla de fotos grandes (verticales) y chicas --- */
+.grid-naturaleza{ grid-template-columns:repeat(4,1fr); }
+.grid-naturaleza .ph:nth-child(1){ grid-column:span 2; grid-row:span 2; }
+.grid-naturaleza .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+.grid-naturaleza .ph:nth-child(3){ grid-column:span 4; grid-row:span 2; }
+.grid-naturaleza .ph:nth-child(4){ grid-column:span 2; grid-row:span 2; }
+.grid-naturaleza .ph:nth-child(5){ grid-column:span 2; grid-row:span 2; }
+
+/* --- Retratos: 3 fotos grandes en fila, todas del mismo tamaño (protagonismo a la cara) --- */
+.grid-retratos{ grid-template-columns:repeat(6,1fr); }
+.grid-retratos .ph:nth-child(1){ grid-column:span 2; grid-row:span 2; }
+.grid-retratos .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+.grid-retratos .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
+
+/* --- Estadio: una foto panorámica grande arriba + detalles abajo --- */
+.grid-rojo{ grid-template-columns:repeat(6,1fr); }
+.grid-rojo .ph:nth-child(1){ grid-column:span 2; }
+.grid-rojo .ph:nth-child(2){ grid-column:span 2; }
+.grid-rojo .ph:nth-child(3){ grid-column:span 2; }
+.grid-rojo .ph:nth-child(4){ grid-column:span 3; }
+.grid-rojo .ph:nth-child(5){ grid-column:span 3; }
+
+/* --- Cumpleaños: mosaico parejo de momentos chicos --- */
+.grid-cumple{ grid-template-columns:repeat(6,1fr); }
+.grid-cumple .ph:nth-child(1){ grid-column:span 2; }
+.grid-cumple .ph:nth-child(2){ grid-column:span 2; }
+.grid-cumple .ph:nth-child(3){ grid-column:span 2; }
+.grid-cumple .ph:nth-child(4){ grid-column:span 3; }
+.grid-cumple .ph:nth-child(5){ grid-column:span 3; }
+
+/* --- Arquitectura: una foto vertical grande + una horizontal final que ocupa todo el ancho --- */
+.grid-arquitectura{ grid-template-columns:repeat(6,1fr); }
+.grid-arquitectura .ph:nth-child(1){ grid-column:span 2; grid-row:span 2; }
+.grid-arquitectura .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+.grid-arquitectura .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
+.grid-arquitectura .ph:nth-child(4){ grid-column:span 6; grid-row:span 2; }
+
+/* --- Urbano: una foto vertical grande + una horizontal final que ocupa todo el ancho --- */
+.grid-urbano{ grid-template-columns:repeat(6,1fr); }
+.grid-urbano .ph:nth-child(1){ grid-column:span 6; grid-row:span 2; }
+.grid-urbano .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+.grid-urbano .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
+.grid-urbano .ph:nth-child(4){ grid-column:span 2; grid-row:span 2; }
+
+.grid-luna{ grid-template-columns:repeat(6,1fr); }
+.grid-luna .ph:nth-child(1){ grid-column:span 2; grid-row:span 2; }
+.grid-luna .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+.grid-luna .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
+.grid-luna .ph:nth-child(4){ grid-column:span 6; grid-row:span 2; }
+
+
+@media (max-width:640px){
+
+  /* Todas las categorías pasan a 2 columnas en celular.
+     grid-auto-flow:dense evita que queden huecos vacíos cuando
+     una foto panorámica no entra justo donde "le tocaría". */
+  .grid-naturaleza, .grid-retratos, .grid-rojo, .grid-cumple,
+  .grid-arquitectura, .grid-urbano, .grid-luna{
+    grid-template-columns:repeat(2,1fr);
+    grid-auto-flow:dense;
+  }
+
+  /* Por default, cada foto ocupa 1 sola columna (se emparejan de a 2) */
+  .grid-naturaleza .ph, .grid-rojo .ph, .grid-cumple .ph,
+  .grid-arquitectura .ph, .grid-urbano .ph, .grid-luna .ph{
+    grid-column:span 1;
+    grid-row:span 1;
+  }
+
+  /* Las que ya marcaste como "ph--wide" (panorámicas) pasan a
+     ocupar el ancho completo, en vez de compartir fila */
+  .ph--wide{
+    grid-column:span 2 !important;
+  }
+
+  /* Truco para evitar huecos: si justo ANTES de una foto panorámica
+     hay una cantidad impar de fotos normales, la última de esas
+     también pasa a ancho completo (si no, queda un cuadradito vacío
+     al lado). :has() detecta "la foto que tiene, como hermana
+     siguiente, una foto ph--wide". */
+  .ph:not(.ph--wide):has(+ .ph--wide){
+    grid-column:span 2;
+  }
+
+  /* Retratos: son solo 3 fotos de caras, así que en vez de
+     achicarlas de a 2, quedan una debajo de la otra a todo el
+     ancho — se aprecian mejor los rostros */
+  .grid-retratos{
+    grid-template-columns:1fr;
+  }
+  .grid-retratos .ph{
+    grid-column:span 1;
+  }
+}
+
+/* --- El "marco" placeholder de cada foto ---
+   Esto es lo que se ve MIENTRAS no hay una foto real cargada.
+   Cuando reemplaces el div.ph por un <img>, este estilo se puede dejar
+   igual (el borde y el fondo quedan detrás de la imagen) o simplificar. */
+.ph{
+  position:relative;
+  aspect-ratio: 4 / 5; /* Proporción del recuadro: 4 de ancho por cada 5 de alto (formato retrato) */
+  background:
+    repeating-linear-gradient(135deg, rgba(23,21,15,0.05) 0 2px, transparent 2px 14px), /* textura de rayas diagonales sutiles */
+    linear-gradient(160deg, var(--bg-panel), #D6CDB2 130%);                              /* degradé beige de fondo */
+  border:1px solid var(--line);
+  overflow:hidden;
+  opacity:0;                       /* Arranca invisible... */
+  transform:translateY(18px);      /* ...y un poco más abajo de su posición final */
+  transition:opacity .7s ease, transform .7s ease; /* ...para animar su aparición */
+}
+
+.ph img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.ph img.ph--abajo{
+  object-position: center 100%;
+}
+
+.ph img.ph--arriba{
+  object-position: center 25%;
+}
+
+.ph--wide{
+  aspect-ratio: 16 / 9;
+}
+
+
+/* Esta clase la agrega script.js cuando la foto entra en pantalla al hacer scroll */
+.ph.in-view{ opacity:1; transform:translateY(0); }
+
+/* Etiqueta chiquita abajo de cada placeholder: categoría + número */
+.ph-label{
+  position:absolute;
+  left:12px;
+  bottom:12px;
+  right:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--ink-soft);
+}
+.ph-label .cat{
+  text-transform:uppercase;
+  font-weight:500;
+}
+.ph-label .idx{
+  font-variant-numeric:tabular-nums; /* los números ocupan siempre el mismo ancho, para que no "salten" al comparar N°01, N°02... */
+  color:var(--ink-faint);
+}
+
+/* Al pasar el mouse por encima, el borde y el "+" se tiñen del verde acento */
+.ph:hover{ border-color:var(--accent); }
+.ph:hover::before{ color:var(--accent); opacity:0.9; }
+
+
+/* -----------------------------------------------------------------------
+   9. SOBRE MÍ
+   ----------------------------------------------------------------------- */
+.about{
+  padding-top:clamp(60px,8vw,110px);
+  padding-bottom:clamp(70px,9vw,120px);
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns: 1fr 1.3fr; /* columna del retrato más angosta que la del texto */
+  gap:clamp(30px,6vw,90px);
+  align-items:start;
+}
+/* En pantallas chicas, retrato arriba y texto abajo (una sola columna) */
+@media (max-width:800px){
+  .about{ grid-template-columns:1fr; }
+}
+
+.about-portrait{
+  aspect-ratio:3/4;
+  background:
+    repeating-linear-gradient(135deg, rgba(23,21,15,0.05) 0 2px, transparent 2px 14px),
+    linear-gradient(160deg, var(--bg-panel), #D6CDB2 130%);
+  border:1px solid var(--line);
+  position:relative;
+}
+/* Texto guía que se ve mientras no hay foto real cargada */
+.about-portrait::before{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center;
+  padding:20px;
+  font-size:12px;
+  letter-spacing:0.05em;
+  color:var(--ink-faint);
+  text-transform:uppercase;
+}
+
+.about-text h2{
+  font-size:clamp(28px,3.6vw,44px);
+  font-weight:600;
+  letter-spacing:-0.02em;
+  text-transform:uppercase;
+  margin-bottom:24px;
+}
+.about-text p{
+  font-size:clamp(16px,1.5vw,19px);
+  line-height:1.65; /* más espacio entre líneas que en los títulos: mejora la lectura de párrafos largos */
+  color:var(--ink-soft);
+  max-width:56ch;
+  margin-bottom:18px;
+}
+
+/* La "ficha técnica" con datos cortos (Basada en, Especialidad, etc) */
+.about-facts{
+  margin-top:34px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(140px,1fr)); /* 2 columnas, cada una de al menos 140px */
+  gap:20px 30px;
+  border-top:1px solid var(--line-soft);
+  padding-top:24px;
+}
+.about-facts dt{ /* dt = la "etiqueta" del dato, ej: "Basada en" */
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:6px;
+}
+.about-facts dd{ /* dd = el "valor" del dato, ej: "Buenos Aires, Argentina" */
+  font-size:15px;
+  color:var(--ink);
+}
+
+
+/* -----------------------------------------------------------------------
+   10. CONTACTO
+   ----------------------------------------------------------------------- */
+.contact{
+  padding-top:clamp(60px,8vw,110px);
+  padding-bottom:clamp(70px,10vw,130px);
+  border-top:1px solid var(--line);
+}
+.contact h2{
+  font-size:clamp(40px,7vw,96px);
+  font-weight:600;
+  letter-spacing:-0.03em;
+  text-transform:uppercase;
+  max-width:14ch;
+  line-height:0.98;
+  margin-bottom:clamp(30px,5vw,56px);
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr); /* 3 columnas: Email / Instagram / Ubicación */
+  gap:clamp(24px,4vw,40px);
+  border-top:1px solid var(--line);
+  padding-top:32px;
+}
+/* En celular, las 3 columnas pasan a apilarse una debajo de la otra */
+@media (max-width:760px){
+  .contact-grid{ grid-template-columns:1fr; }
+}
+
+.contact-block dt{
+  font-size:12px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:10px;
+}
+.contact-block dd a{
+  font-size:clamp(18px,2vw,22px);
+  font-weight:500;
+  border-bottom:1px solid transparent;
+  transition:border-color .25s ease, color .25s ease;
+}
+/* Al pasar el mouse sobre el email/instagram, se subraya en verde acento */
+.contact-block dd a:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+}
+.contact-block dd{ margin-bottom:8px; }
+.contact-block .muted{
+  font-size:14px;
+  color:var(--ink-soft);
+}
+
+
+/* -----------------------------------------------------------------------
+   11. PIE DE PÁGINA (footer)
+   ----------------------------------------------------------------------- */
+footer{
+  border-top:1px solid var(--line);
+  padding-top:24px;
+  padding-bottom:32px;
+  display:flex;
+  justify-content:space-between; /* copyright a la izquierda, "volver arriba" a la derecha */
+  align-items:center;
+  font-size:12px;
+  color:var(--ink-faint);
+  letter-spacing:0.04em;
+  flex-wrap:wrap;
+  gap:12px;
+}
+footer a{
+  text-decoration:underline;
+  text-underline-offset:3px; /* separa un poco el subrayado de la letra, se ve más prolijo */
+}
+footer a:hover{ color:var(--accent); }
