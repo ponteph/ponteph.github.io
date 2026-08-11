@@ -99,19 +99,17 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
   position:relative;
-  z-index:0;
 }
 
-/* Textura de fondo de toda la página */
+/* La textura de papel vive acá, separada del body real */
 body::before{
   content:"";
-  position:fixed;      /* tamaño = pantalla visible, no toda la página → no se agranda */
+  position:fixed;
   inset:0;
   z-index:-1;
   background-image:url('img/image.png');
   background-size:cover;
   background-position:center;
-  background-repeat:no-repeat;
   background-blend-mode:multiply;
   background-color:var(--bg);
   pointer-events:none;
@@ -170,13 +168,21 @@ img{ max-width:100%; display:block; }       /* Las imágenes nunca se desbordan 
    5. NAVEGACIÓN (menú fijo arriba de todo)
    ----------------------------------------------------------------------- */
 header.site-nav{
+  position:fixed;      /* Se queda pegado arriba aunque el usuario haga scroll */
+  top:0; left:0; right:0;
+  z-index:100;          /* Se dibuja por ENCIMA del resto del contenido */
+  background:rgba(236,231,217,0.86); /* Beige semi-transparente */
+  backdrop-filter:blur(6px);          /* Desenfoca lo que pasa por detrás del menú (efecto vidrio esmerilado) */
+  -webkit-backdrop-filter:blur(6px);  /* Misma propiedad, versión para Safari */
+  border-bottom:1px solid transparent;
+  transition:border-color .4s ease, background .4s ease; /* Transición suave al aparecer la línea */
   background-color:var(--bg);
   background-image:url('img/image.png');
-  background-size:cover;
+  background-size:cover; /* la imagen cubre toda la pantalla sin repetirse */
   background-position:center;
-  background-blend-mode:multiply;
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
+  background-attachment:fixed; /* la textura queda quieta aunque hagas scroll, como si fuera el papel de fondo de todo el sitio, no de cada sección */
+  background-blend-mode:multiply; /* mezcla la textura con el beige: donde la foto tiene sombras/grano, oscurece un poco el beige; donde es blanca, casi no cambia nada */
+
 }
 
 /* Esta clase se agrega/saca con JavaScript (ver script.js) cuando el
