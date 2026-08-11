@@ -174,33 +174,15 @@ header.site-nav {
   right: 0;
   z-index: 100;
 
-  background-color: var(--bg);
-  border-bottom: 1px solid transparent;
+  background-color: #ECE7D9;
 
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 
-  transition: border-color .4s ease, background .4s ease;
-
-  overflow: hidden;
+  transition:
+    border-color .4s ease,
+    background .4s ease;
 }
 
-header.site-nav::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-
-  background:
-    linear-gradient(rgba(236, 231, 217, 0.65), rgba(236, 231, 217, 0.65)),
-    url('img/image.png');
-
-  background-size: 100% auto;
-  background-position: center top;
-  background-repeat: no-repeat;
-
-  pointer-events: none;
-}
 
 /* Esta clase se agrega/saca con JavaScript (ver script.js) cuando el
    usuario hace scroll: dibuja una línea fina debajo del menú para
