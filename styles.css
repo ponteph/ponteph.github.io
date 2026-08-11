@@ -684,9 +684,7 @@ footer a{
 footer a:hover{ color:var(--accent); }
 
 header.site-nav {
-  background: #ECE7D9 !important;
-  background-color: #ECE7D9 !important;
-  background-image: none !important;
+  background-color: #000000 !important;
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
