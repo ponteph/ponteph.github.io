@@ -410,6 +410,14 @@ header.site-nav.scrolled{
 .grid-arquitectura .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
 .grid-arquitectura .ph:nth-child(4){ grid-column:span 6; grid-row:span 2; }
 
+/* --- Futbol: mezcla de fotos grandes (verticales) y chicas --- */
+.grid-futbol{ grid-template-columns:repeat(4,1fr); }
+.grid-futbol .ph:nth-child(1){ grid-column:span 4; grid-row:span 2; }
+.grid-futbol .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+.grid-futbol .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
+.grid-futbol .ph:nth-child(4){ grid-column:span 4; grid-row:span 2; }
+
+
 /* --- Urbano: una foto vertical grande + una horizontal final que ocupa todo el ancho --- */
 .grid-urbano{ grid-template-columns:repeat(6,1fr); }
 .grid-urbano .ph:nth-child(1){ grid-column:span 6; grid-row:span 2; }
@@ -432,14 +440,14 @@ header.site-nav.scrolled{
      grid-auto-flow:dense evita que queden huecos vacíos cuando
      una foto panorámica no entra justo donde "le tocaría". */
   .grid-naturaleza, .grid-show, .grid-retratos, .grid-rojo, .grid-cumple,
-  .grid-arquitectura, .grid-urbano, .grid-luna{
+  .grid-arquitectura, .grid-urbano, .grid-futbol, .grid-luna{
     grid-template-columns:repeat(2,1fr);
     grid-auto-flow:dense;
   }
 
   /* Por default, cada foto ocupa 1 sola columna (se emparejan de a 2) */
   .grid-naturaleza .ph, .grid-show, .grid-rojo .ph, .grid-cumple .ph,
-  .grid-arquitectura .ph, .grid-urbano .ph, .grid-luna .ph{
+  .grid-arquitectura .ph, .grid-urbano .ph, .grid-futbol, .grid-luna .ph{
     grid-column:span 1;
     grid-row:span 1;
   }
