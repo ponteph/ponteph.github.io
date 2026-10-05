@@ -366,12 +366,25 @@ header.site-nav.scrolled{
   padding-bottom:clamp(50px,7vw,90px);
 }
 
-/* --- Show: una foto vertical grande + una horizontal final que ocupa todo el ancho --- */
+/* --- Show --- */
 .grid-show{ grid-template-columns:repeat(6,1fr); }
-.grid-show .ph:nth-child(1){ grid-column:span 2; grid-row:span 2; }
-.grid-show .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
-.grid-show .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
-.grid-show .ph:nth-child(4){ grid-column:span 6; grid-row:span 2; }
+.grid-show .ph:nth-child(1){ grid-column:span 3; }
+.grid-show .ph:nth-child(2){ grid-column:span 3; }
+.grid-show .ph:nth-child(3){ grid-column:span 3; }
+.grid-show .ph:nth-child(4){ grid-column:span 3; }
+.grid-show .ph:nth-child(5){ grid-column:span 6; grid-row:span 3; }
+.grid-show .ph:nth-child(6){ grid-column:span 3; }
+.grid-show .ph:nth-child(7){ grid-column:span 3; }
+
+/* --- Futbol --- */
+.grid-futbol{ grid-template-columns:repeat(6,1fr); }
+.grid-futbol .ph:nth-child(1){ grid-column:span 2; grid-row:span 2; }
+.grid-futbol .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+.grid-futbol .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
+.grid-futbol .ph:nth-child(4){ grid-column:span 2; grid-row:span 2; }
+.grid-futbol .ph:nth-child(5){ grid-column:span 2; grid-row:span 2; }
+.grid-futbol .ph:nth-child(6){ grid-column:span 2; grid-row:span 2; }
+
 
 /* --- Naturaleza: mezcla de fotos grandes (verticales) y chicas --- */
 .grid-naturaleza{ grid-template-columns:repeat(4,1fr); }
@@ -409,14 +422,6 @@ header.site-nav.scrolled{
 .grid-arquitectura .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
 .grid-arquitectura .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
 .grid-arquitectura .ph:nth-child(4){ grid-column:span 6; grid-row:span 2; }
-
-/* --- Futbol: mezcla de fotos grandes (verticales) y chicas --- */
-.grid-futbol{ grid-template-columns:repeat(4,1fr); }
-.grid-futbol .ph:nth-child(1){ grid-column:span 4; grid-row:span 2; }
-.grid-futbol .ph:nth-child(2){ grid-column:span 2; grid-row:span 2; }
-.grid-futbol .ph:nth-child(3){ grid-column:span 2; grid-row:span 2; }
-.grid-futbol .ph:nth-child(4){ grid-column:span 4; grid-row:span 2; }
-
 
 /* --- Urbano: una foto vertical grande + una horizontal final que ocupa todo el ancho --- */
 .grid-urbano{ grid-template-columns:repeat(6,1fr); }
